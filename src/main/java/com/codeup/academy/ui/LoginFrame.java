@@ -53,6 +53,11 @@ public class LoginFrame extends javax.swing.JFrame {
         });
 
         buttonLogin.setText("Ingresar");
+        buttonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +108,28 @@ public class LoginFrame extends javax.swing.JFrame {
     private void lblUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblUserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblUserActionPerformed
+
+    
+    private void abrirVentanaPrincipal(){
+        
+        RegistroEstudiantesFrame ventanaPrincipal = new RegistroEstudiantesFrame();
+        ventanaPrincipal.setVisible(true);
+    }
+    
+    private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
+        String user = lblUser.getText();
+        String password = new String (lblPassword.getPassword());
+        
+        if (user.equals("Admin") && password.equals("1234")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Login exitoso");
+            abrirVentanaPrincipal();
+            dispose();
+            
+            
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Credenciales incorrectas");
+        }
+    }//GEN-LAST:event_buttonLoginActionPerformed
 
     /**
      * @param args the command line arguments

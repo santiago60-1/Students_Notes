@@ -8,8 +8,16 @@ import com.codeup.academy.domain.Estudiante;
 import com.codeup.academy.domain.Notas;
 import com.codeup.academy.services.RegistroEstudiantesService;
 import com.codeup.academy.services.calculoEstudiantesService;
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -59,6 +67,11 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
         txtNota = new javax.swing.JLabel();
         txtResultado = new javax.swing.JLabel();
         txtPromedioGrupal = new javax.swing.JLabel();
+        buttonClear = new javax.swing.JButton();
+        buttonExit = new javax.swing.JButton();
+        saveCsv = new javax.swing.JButton();
+        btnCarry = new javax.swing.JButton();
+        closeSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +133,41 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
 
         txtPromedioGrupal.setText("Promedio grupal");
 
+        buttonClear.setText("Limpiar");
+        buttonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClearActionPerformed(evt);
+            }
+        });
+
+        buttonExit.setText("Salir");
+        buttonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExitActionPerformed(evt);
+            }
+        });
+
+        saveCsv.setText("Guardar csv");
+        saveCsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCsvActionPerformed(evt);
+            }
+        });
+
+        btnCarry.setText("Cargar csv");
+        btnCarry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarryActionPerformed(evt);
+            }
+        });
+
+        closeSesion.setText("Cerrar sesion");
+        closeSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeSesionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,25 +175,34 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(spinerAge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                        .addComponent(lblName, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)
-                        .addComponent(lblNote, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                        .addComponent(lblNote2)
-                        .addComponent(lblNote3))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton3)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(spinerAge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                .addComponent(lblName, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(buttonClear))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addComponent(lblNote, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(lblNote2)
+                                .addComponent(lblNote3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2)
+                                    .addComponent(buttonExit))
+                                .addGap(45, 45, 45)
+                                .addComponent(jButton3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveCsv)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnCarry)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6)
@@ -162,6 +219,10 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtResultado)
                         .addGap(122, 122, 122))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(closeSesion)
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +257,11 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jButton2)
                             .addComponent(jButton3))
-                        .addGap(281, 281, 281))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonClear)
+                            .addComponent(buttonExit))
+                        .addGap(239, 239, 239))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
@@ -207,9 +272,14 @@ public class RegistroEstudiantesFrame extends javax.swing.JFrame {
                             .addComponent(txtResultado))
                         .addGap(39, 39, 39)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(txtPromedioGrupal)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtPromedioGrupal)
+                            .addComponent(saveCsv)
+                            .addComponent(btnCarry))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeSesion)
+                        .addGap(40, 40, 40))))
         );
 
         pack();
@@ -243,9 +313,9 @@ private void actualizarListaEstudiantes() {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- try {
+     try {
         String id = String.valueOf(System.currentTimeMillis());
-        String nombre = lblName.getText();
+        String nombre = lblName.getText(); // JTextField para entrada
         if (nombre == null || nombre.isBlank()) {
             javax.swing.JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
             return;
@@ -266,14 +336,30 @@ private void actualizarListaEstudiantes() {
         double note2 = Double.parseDouble(nota2Text);
         double note3 = Double.parseDouble(nota3Text);
 
+        if (note < 0 || note > 5) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La nota 1 debe estar entre 0 y 5");
+            return;
+        }
+
+        if (note2 < 0 || note2 > 5) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La nota 2 debe estar entre 0 y 5");
+            return;
+        }
+
+        if (note3 < 0 || note3 > 5) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La nota 3 debe estar entre 0 y 5");
+            return;
+        }
+
         List<String> lista = new ArrayList<>();
         Estudiante estudiante = new Estudiante(id, nombre, edad, note, note2, note3, lista);
+
         registroEstudiantesService.agregarEstudiante(estudiante);
         actualizarListaEstudiantes();
+
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa valores numéricos válidos para las notas");
     }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNameActionPerformed
@@ -282,23 +368,49 @@ private void actualizarListaEstudiantes() {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        String id = "1";
-        String nombre = lblName.getText();
-        int edad = (Integer) spinerAge.getValue();
-        double note = Double.parseDouble(lblNote.getText());
-        double note2 = Double.parseDouble(lblNote2.getText());
-        double note3 = Double.parseDouble(lblNote3.getText());
-        List<String> lista = new ArrayList<>();
-        
-        Estudiante estudiante = new Estudiante (id, nombre, edad, note, note2, note3, lista);
-        
-        txtPromedio.setText("El promedio es:"+estudiante.calcularPromedio());
-        txtNota.setText("La nota maxima del estudiante es: "+estudiante.notaMaxima());
-        txtResultado.setText(estudiante.estaAprobado() ? "Aprobado":"Reprobado");
+try {
+    String id = "1";
+    String nombre = lblName.getText();
+    int edad = (Integer) spinerAge.getValue();
+    double note = Double.parseDouble(lblNote.getText());
+    double note2 = Double.parseDouble(lblNote2.getText());
+    double note3 = Double.parseDouble(lblNote3.getText());
+
+    // Validar antes de crear el objeto
+    if (note < 0 || note > 5) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La nota 1 debe estar entre 0 y 5");
+        return;
+    }
+
+    if (note2 < 0 || note2 > 5) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La nota 2 debe estar entre 0 y 5");
+        return;
+    }
+
+    if (note3 < 0 || note3 > 5) {
+        javax.swing.JOptionPane.showMessageDialog(this, "La nota 3 debe estar entre 0 y 5");
+        return;
+    }
+
+    List<String> lista = new ArrayList<>();
+    Estudiante estudiante = new Estudiante(id, nombre, edad, note, note2, note3, lista);
+
+    // Ahora sí actualiza los campos solo si las notas son válidas
+    txtPromedio.setText("El promedio es: " + estudiante.calcularPromedio());
+    txtNota.setText("La nota máxima del estudiante es: " + estudiante.notaMaxima());
+    txtResultado.setText(estudiante.estaAprobado() ? "Aprobado" : "Reprobado");
+
+} catch (NumberFormatException e) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Por favor ingrese las notas para hacer el promedio");
+}
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    try{
+        
 
 
     List<Estudiante> listaEstudiantes = registroEstudiantesService.listarEstudiantes();
@@ -335,7 +447,150 @@ private void actualizarListaEstudiantes() {
     txtResultado.setText("Aprobados: " + aprobados + " | Reprobados: " + reprobados +
             " | Estado grupal: " + (grupoAprobado ? "Aprobado" : "No aprobado"));
 
+    } catch(Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor rellene los campos");
+}
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
+        
+        txtPromedio.setText("El promedio es: ");
+        lblNote.setText("");
+        lblName.setText("");
+        lblNote2.setText("");
+        lblNote3.setText("");
+        spinerAge.setValue(0);
+        
+        
+    }//GEN-LAST:event_buttonClearActionPerformed
+
+    private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
+
+        dispose();
+
+    }//GEN-LAST:event_buttonExitActionPerformed
+
+    private void saveCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCsvActionPerformed
+    List<Estudiante> estudiantes = registroEstudiantesService.listarEstudiantes();
+
+    if (estudiantes.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "No hay estudiantes para guardar.");
+        return;
+    }
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Guardar como archivo CSV");
+
+    int seleccion = fileChooser.showSaveDialog(this);
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        File archivo = fileChooser.getSelectedFile();
+
+        // Asegurar que tenga la extensión .csv
+        if (!archivo.getName().toLowerCase().endsWith(".csv")) {
+            archivo = new File(archivo.getAbsolutePath() + ".csv");
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(archivo))) {
+            // Escribir encabezado
+            writer.println("ID,Nombre,Edad,Nota 1,Nota 2,Nota 3,Promedio,Nota Máxima,Aprobado");
+
+            // Escribir datos
+            for (Estudiante est : estudiantes) {
+                double promedio = est.calcularPromedio();
+                double notaMax = est.notaMaxima();
+                String estado = est.estaAprobado() ? "Aprobado" : "Reprobado";
+
+                writer.printf("%s,%s,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%s%n",
+                    est.getId(),
+                    est.getNombre(),
+                    est.getEdad(),
+                    est.getNote(),
+                    est.getNote2(),
+                    est.getNote3(),
+                    promedio,
+                    notaMax,
+                    estado
+                );
+            }
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Archivo CSV guardado exitosamente.");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar el archivo: " + e.getMessage());
+        }
+    }
+        
+    }//GEN-LAST:event_saveCsvActionPerformed
+
+    private void btnCarryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarryActionPerformed
+            JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Seleccionar archivo CSV");
+
+    int seleccion = fileChooser.showOpenDialog(this);
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        File archivo = fileChooser.getSelectedFile();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            boolean primeraLinea = true;
+
+            while ((linea = reader.readLine()) != null) {
+                // Saltar encabezado
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
+
+                // Separar los datos
+                String[] datos = linea.split(",");
+
+                if (datos.length >= 9) { // Asegura que hay suficientes columnas
+                    String id = datos[0];
+                    String nombre = datos[1];
+                    int edad = Integer.parseInt(datos[2]);
+                    double nota1 = Double.parseDouble(datos[3]);
+                    double nota2 = Double.parseDouble(datos[4]);
+                    double nota3 = Double.parseDouble(datos[5]);
+
+                    // Aquí puedes manejar los comentarios si los usas
+                    List<String> comentarios = new ArrayList<>();
+
+                    Estudiante est = new Estudiante(id, nombre, edad, nota1, nota2, nota3, comentarios);
+
+                    // Agregarlo al servicio o a tu lista
+                    registroEstudiantesService.agregarEstudiante(est);
+                }
+            }
+
+            actualizarListaEstudiantes(); // refresca tu tabla o lista
+            javax.swing.JOptionPane.showMessageDialog(this, "Archivo CSV cargado exitosamente.");
+
+        } catch (Exception  e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al leer el archivo: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_btnCarryActionPerformed
+
+    
+    private void closeSesion(){
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, "Estas seguro de que quieres cerrar sesion?",
+                "Confirmar",javax.swing.JOptionPane.YES_NO_OPTION);
+        
+        if (confirmacion == javax.swing.JOptionPane.YES_NO_OPTION){
+            dispose();
+            SwingUtilities.invokeLater(() ->{
+                new LoginFrame().setVisible(true);
+            });
+            
+        }
+        
+        
+    }
+    
+    private void closeSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeSesionActionPerformed
+        closeSesion();
+    }//GEN-LAST:event_closeSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +618,10 @@ private void actualizarListaEstudiantes() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCarry;
+    private javax.swing.JButton buttonClear;
+    private javax.swing.JButton buttonExit;
+    private javax.swing.JButton closeSesion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -378,6 +637,7 @@ private void actualizarListaEstudiantes() {
     private javax.swing.JTextField lblNote;
     private javax.swing.JTextField lblNote2;
     private javax.swing.JTextField lblNote3;
+    private javax.swing.JButton saveCsv;
     private javax.swing.JSpinner spinerAge;
     private javax.swing.JTable tablaEstudiantes;
     private javax.swing.JLabel txtNota;
