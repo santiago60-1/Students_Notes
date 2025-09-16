@@ -552,11 +552,10 @@ try {
                     double nota1 = Double.parseDouble(datos[3]);
                     double nota2 = Double.parseDouble(datos[4]);
                     double nota3 = Double.parseDouble(datos[5]);
+                    List <String> lista= new ArrayList<>();
 
-                    // Aquí puedes manejar los comentarios si los usas
-                    List<String> comentarios = new ArrayList<>();
 
-                    Estudiante est = new Estudiante(id, nombre, edad, nota1, nota2, nota3, comentarios);
+                    Estudiante est = new Estudiante(id, nombre, edad, nota1, nota2, nota3, lista);
 
                     // Agregarlo al servicio o a tu lista
                     registroEstudiantesService.agregarEstudiante(est);
